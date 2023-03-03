@@ -1,26 +1,12 @@
-var Scraper = require('./scraper');
-const express = require('express')
-const cors = require('cors')
-const PORT = 8080
+;const express = require('express')
+const bodyParser = require('body-parser');
+const port = process.env.PORT || 8080
+
 const app = express()
 
+app.use(bodyParser.json());
 
-const google = new Scraper();
+const User = require('./routes/User')
+app.use('/api', User)
 
-app.get('/api',async (req,res) => {
-  const search = req.query.search
-  console.log(search)
-  const results = await google.scrape(`${search}`, 100); // Or ['banana', 'strawberry'] for multi-queries
-  console.log('results', results);
-
-  res.send(results);
-})
-
-
-// Enable cors
-app.use(cors({
-    origin: '*'
-})
-)
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(port, () => console.log(`Server on port ${port}`))
