@@ -5,7 +5,7 @@ var Scraper = require('../scraper')
 
 const google = new Scraper();
 
-router.post('/search', async (req,res) => {
+router.get('/search', async (req,res) => {
     try {
         const search = req.query.q
         const results = await google.scrape(`${search}`, 100); // Or ['banana', 'strawberry'] for multi-queries
